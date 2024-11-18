@@ -1,0 +1,133 @@
+##########  Version vom 11. November 2024 ##########
+##########  ESP8266 nur für LD2410C ################
+esphome:
+  name: test-youtube
+  friendly_name: Test-YouTube
+
+esp8266:
+  board: esp01_1m
+
+#------- Enable logging  ---------------------------
+logger:
+  baud_rate: 0
+
+#------- Enable Home Assistant API  ----------------
+api:
+  encryption:
+    key: "uwgf21FL5IaD5KYxl/iI5pTBIHFtqeT4MSuC1Sao8zE="
+
+ota:
+  - platform: esphome
+    password: "14c338f81305f88f7ab7f60ed3a61c1f"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: HIGH
+
+  manual_ip:
+    static_ip: 192.168.178.214
+    gateway: 192.168.178.1
+    subnet: 255.255.255.0
+    
+  #---  Enable fallback hotspot in case wifi connection fails  ------
+  ap:
+    ssid: "Test-Youtube Fallback Hotspot"
+    password: "NVDucjVUqlcW"
+
+web_server:
+  port: 80
+  version: 2
+  include_internal: true
+
+captive_portal:
+
+#------------ UART für LD2410C  ----------------------
+uart:
+  id: ld2410_uart
+  tx_pin: 1
+  rx_pin: 3
+  baud_rate: 256000
+  parity: NONE
+  stop_bits: 1
+
+ld2410:
+  id: my_ld2410
+  uart_id: ld2410_uart
+
+switch:
+  - platform: ld2410
+    engineering_mode:
+      name: Engineering Mode
+    bluetooth:
+      name: Control Bluetooth
+
+sensor:
+  - platform: ld2410
+#    light:
+#      name: light
+    moving_distance:
+      name : Moving Distance
+    still_distance:
+      name: Still Distance
+    moving_energy:
+      name: Move Energy
+    still_energy:
+      name: Still Energy
+    detection_distance:
+      name: Detection Distance
+
+number:
+  - platform: ld2410
+    timeout:
+      name: timeout
+    light_threshold:
+      name: light threshold
+    max_move_distance_gate:
+      name: max move distance gate
+    max_still_distance_gate:
+      name: max still distance gate
+
+select:
+  - platform: ld2410
+    distance_resolution:
+      name: "distance resolution"
+    baud_rate:
+      name: "baud rate"
+#    light_function:
+#      name: light function
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: Presence
+    has_moving_target:
+      name: Moving Target
+    has_still_target:
+      name: Still Target
+#--------------------------  Sensor LD2410C Pin OUT an GPIO14 D5  -------
+  - platform: gpio
+    pin: GPIO14
+    name: "Bewegung GPIO14"
+    id: occupancy 
+    device_class: motion
+ 
+button:
+  - platform: ld2410
+    factory_reset:
+      name: "factory reset"
+    restart:
+      name: "restart"
+    query_params:
+      name: query params
+
+text_sensor:
+  - platform: ld2410
+    version:
+      name: "firmware version"
+    mac_address:
+      name: "mac address"
+      
+  - platform: wifi_info
+    
+          
