@@ -1,4 +1,3 @@
-
 # Automatisierung Stand 18. Nov 2024
 alias: LD2410-Badezimmerlicht EIN
 description: ""
