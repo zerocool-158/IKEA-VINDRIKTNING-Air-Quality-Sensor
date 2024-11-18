@@ -18,7 +18,7 @@ api:
 
 ota:
   - platform: esphome
-    password: "14c338f81305f88f7ab7f60ed3a61c1f"
+    password: "...dein Passwort..."
 
 wifi:
   ssid: !secret wifi_ssid
@@ -26,14 +26,14 @@ wifi:
   power_save_mode: HIGH
 
   manual_ip:
-    static_ip: 192.168.178.214
-    gateway: 192.168.178.1
+    static_ip: xxx.xxx.xxx.xxx
+    gateway: xxx.xxx.xxx.xxx
     subnet: 255.255.255.0
     
   #---  Enable fallback hotspot in case wifi connection fails  ------
   ap:
     ssid: "Test-Youtube Fallback Hotspot"
-    password: "NVDucjVUqlcW"
+    password: "...dein Passwort..."
 
 web_server:
   port: 80
