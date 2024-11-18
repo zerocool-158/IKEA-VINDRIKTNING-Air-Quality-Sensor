@@ -1,0 +1,48 @@
+
+# Automatisierung Stand 18. Nov 2024
+alias: LD2410-Badezimmerlicht EIN
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - binary_sensor.test_youtube_bewegung_gpio14
+    from: "off"
+    to: "on"
+conditions:
+  - condition: sun
+    before: sunrise
+    after: sunset
+actions:
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness: 60
+      kelvin: 1800
+    target:
+      entity_id: light.hue_bad_rechts
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness: 60
+      kelvin: 1800
+    target:
+      entity_id: light.hue_bad_links
+  - action: input_boolean.turn_on
+    alias: Helfer für Ulanzi Clock
+    target:
+      entity_id: input_boolean.wc
+    data: {}
+  - action: media_player.media_play
+    metadata: {}
+    data: {}
+    target:
+      device_id: cb887eab87769dce98b32c84e189a2d7
+  - type: turn_on
+    device_id: dc43929c005762b03213d2296b38b7a7
+    entity_id: b6b1a9f1dc3b502a435688d8079e7fe6
+    domain: light
+  - type: turn_on
+    device_id: 197dbba6edb4014b255e5e7c7c9a9cf7
+    entity_id: a00023b6a9d0705bc28b98c5a260f117
+    domain: light
+mode: single
